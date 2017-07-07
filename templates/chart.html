@@ -2,20 +2,20 @@
 <html lang="en">
 <head>   
   <meta charset="utf-8" />   
-  <title>Shakespeare Analysis</title>      
+  <title>Shakespeare Play Analysis Graph</title>      
   <!-- import plugin script -->   
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js">
   </script>
 
 </head>
 <body>
-  <h1>Number of Lines Per Character in Shakespeare</h1>
+  <h1 align="center">Number of Lines Per Character in Shakespeare</h1>
   <!-- bar chart canvas element -->
   <canvas id="chart" width="2000" height="900"></canvas>
   <script>
    // bar chart data
    var getBackgroundColor = function() {
-    return 'rgba(67, 67, 67, 0.2)';
+    return 'rgba(67, 67, 67, 0.4)';
   }
 
   var getHoverBackgroundColor = function() {
@@ -33,12 +33,12 @@
    {% endfor %}],
    datasets : [
    {
-    label: 'Shakespeare Lines Per Character',
+    label: 'Number of Lines',
     backgroundColor: getBackgroundColor(),
     hoverBackgroundColor: getHoverBackgroundColor(),
     borderColor: getBorderColor(),
     borderWidth: 1,
-    
+
     data : [{% for item in values %}
     {{item}},
     {% endfor %}]
@@ -65,7 +65,7 @@ options = {
 
    // get bar chart canvas
    var mychart = document.getElementById("chart").getContext("2d");
-   
+
    steps = 10
    max = 10
    
@@ -74,6 +74,6 @@ options = {
     data: barData,
     options: options
   });
-   
+
 </script>
 </body></html>
