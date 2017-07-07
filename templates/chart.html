@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>   
-<meta charset="utf-8" />   
-<title>Shakespeare Analysis</title>      
-<!-- import plugin script -->   
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js">
-</script>
+  <meta charset="utf-8" />   
+  <title>Shakespeare Analysis</title>      
+  <!-- import plugin script -->   
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js">
+  </script>
 
 </head>
 <body>
-<h1>Number of Lines Per Character in Shakespeare</h1>
-<!-- bar chart canvas element -->
-<canvas id="chart" width="1000" height="500"></canvas>
-<script>
+  <h1>Number of Lines Per Character in Shakespeare</h1>
+  <!-- bar chart canvas element -->
+  <canvas id="chart" width="2000" height="900"></canvas>
+  <script>
    // bar chart data
-  var getBackgroundColor = function() {
+   var getBackgroundColor = function() {
     return 'rgba(67, 67, 67, 0.2)';
   }
 
@@ -29,56 +29,51 @@
 
   var barData = {
    labels : [{% for item in labels %}
-                  "{{item}}",
-              {% endfor %}],
+   "{{item}}",
+   {% endfor %}],
    datasets : [
-      {
-        label: 'Shakespeare Lines Per Character',
-        backgroundColor: getBackgroundColor(),
-        hoverBackgroundColor: getHoverBackgroundColor(),
-        borderColor: getBorderColor(),
-        borderWidth: 1,
-          
-          data : [{% for item in values %}
-                      {{item}},
-                    {% endfor %}]
-      }
-      ]
-   }
-
-   options = {
-    scales: {
-        xAxes: [{
-            gridLines: {
-                offsetGridLines: true
-            }
-        }]
-    }
+   {
+    label: 'Shakespeare Lines Per Character',
+    backgroundColor: getBackgroundColor(),
+    hoverBackgroundColor: getHoverBackgroundColor(),
+    borderColor: getBorderColor(),
+    borderWidth: 1,
+    
+    data : [{% for item in values %}
+    {{item}},
+    {% endfor %}]
   }
- 
+  ]
+}
+
+options = {
+  scales: {
+    xAxes: [{
+      stacked: false,
+      beginAtZero: true,
+      scaleLabel: {
+        labelString: 'Month'
+      },
+      ticks: {
+        stepSize: 1,
+        min: 0,
+        autoSkip: false
+      }
+    }]
+  }
+}
+
    // get bar chart canvas
    var mychart = document.getElementById("chart").getContext("2d");
- 
+   
    steps = 10
    max = 10
-   // draw bar chart
-   // new Chart(mychart).Bar(barData, {
-   //      scaleOverride: true,
-   //      scaleSteps: steps,
-   //      scaleStepWidth: Math.ceil(max / steps),
-   //      scaleStartValue: 0,
-   //      scaleShowVerticalLines: true,
-   //      scaleShowGridLines : true,
-   //      barShowStroke : true,
-   //      scaleShowLabels: true
-   // });
    
-
    new Chart(mychart, {
     type: 'bar',
-    data: barData
-    
+    data: barData,
+    options: options
   });
- 
+   
 </script>
 </body></html>

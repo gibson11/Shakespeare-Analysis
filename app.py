@@ -46,6 +46,6 @@ def readPlay():
     for i in range(len(labels)):
         return render_template('chart.html', values=values, labels=labels)
 
-        if __name__ == "__main__":
-            port = int(os.environ.get("PORT", 5000))
-            app.run(host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
