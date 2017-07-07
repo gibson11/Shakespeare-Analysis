@@ -19,10 +19,11 @@ def readPlay():
 	listS = []
 	root = ET.fromstring(data)
 	#find all speeches
-    for speech in root.findall('./ACT/SCENE/SPEECH'): 
+	for speech in root.findall('./ACT/SCENE/SPEECH'): 
     	speaker = speech.find('SPEAKER').text #find the speaker name
-        if speaker == "ALL": 
-        	continue #skip if speaker name is ALL
+    	#skip if speaker name is ALL
+    	if speaker == "ALL": 
+    		continue 
         speaker = speaker.title() #convert speaker label to CamelCase for graph
     	lineList = speech.findall('LINE') #find all the lines by this speaker as a list
     	numberOfLines = len(lineList) 
