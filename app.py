@@ -1,9 +1,11 @@
+#app.py
+#Gibson Mulonga
+#July 7, 2017
 import urllib.request
 import xml.etree.ElementTree as ET
 import os
-import cgi
 from collections import OrderedDict
-from flask import Flask, render_template, Markup, request
+from flask import Flask, render_template, request
 import requests
 
 
@@ -18,18 +20,18 @@ def index():
     sortedSpeakerDict = {}
 
     if request.method == "POST":
-        r = ""
+        url_result = ""
         url = ""
         # get url that the person has entered
         try:
             url = request.form['url']
             if "static" in url:
-                r = url
+                url_result = url
             else:
-                r = requests.get(url)
+                url_result = requests.get(url)
         except:
-            getErrors("Unable to get URL. Please make sure it's valid and try again.", errors)
-        if r:
+            return getErrors("Unable to get URL. Please make sure it's valid and try again.", errors)
+        if url_result:
             data = ""
             if "static" in url:
                 try:
@@ -37,13 +39,12 @@ def index():
                     data = file.read()
                     file.close()
                 except:
-                    getErrors("No such file or directory. Please make sure it's a valid file and try again", errors)
+                    return getErrors("No such file or directory. Please make sure it's a valid file and try again", errors)
             else:
                 file = urllib.request.urlopen(url)
                 data = file.read()
                 file.close()
             
-            root = ""
             try:
                 root = ET.fromstring(data)
                 #find all speeches
@@ -64,12 +65,13 @@ def index():
                         speakerDict[speaker] += numberOfLines 
                     else:
                         speakerDict[speaker] = numberOfLines
+                if len(speakerDict) == 0:
+                    return getErrors("URL does not have any speakers. Please make sure it's a valid URL and try again.", errors)
             except:
-                getErrors("The XML file has a bad format. Please make sure it's a valid file and try again", errors)
+                return getErrors("The XML file has a bad format. Please make sure it's a valid file and try again", errors)
 
              
-            if len(speakerDict) == 0:
-                getErrors("URL does not have any speakers. Please make sure it's a valid URL and try again.", errors)
+            
 
     
 

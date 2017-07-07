@@ -1,12 +1,8 @@
+#test_app.py
+#Gibson Mulonga
+#July 7, 2017
 import app
 import unittest 
-import urllib
-import pathlib
-import xml.etree.ElementTree as ET
-import os
-from flask import Flask, url_for, send_from_directory
-from settings import APP_STATIC
-
 
 class AppTests(unittest.TestCase): 
 
@@ -17,8 +13,8 @@ class AppTests(unittest.TestCase):
         self.test_client.testing = True 
         
  
-
-    def openurl(self, url):
+    """Fires a request to the index page by giving it a url (filename in this case)"""
+    def fire_request(self, url):
 	    return self.test_client.post('/', data=dict(url=url), follow_redirects=True)
 
     """Check that the application gets and responds to HTTP GET request"""
@@ -45,7 +41,7 @@ class AppTests(unittest.TestCase):
      number of lines"""
     def test_speaker_order(self):
         testfile = 'static/test01.xml'
-        result = self.openurl(testfile)
+        result = self.fire_request(testfile)
         #check that label and data arrays are in order and have the correct values
         labels = 'labels : [\n   "Lafeu",\n   \n   "Bertram",\n   \n   "Countess",\n   ]' 
         data = 'data : [\n    5,\n    \n    3,\n    \n    1,\n    ]' 
@@ -55,18 +51,18 @@ class AppTests(unittest.TestCase):
     """Good url but no speeches"""
     def test_zero_speakers(self):
         testfile = 'static/test02.xml'
-        result = self.openurl(testfile)
+        result = self.fire_request(testfile)
         assert b'URL does not have any speakers' in result.data
 
     """Blank XML file"""
     def test_blank_file(self):
         testfile = 'static/test03.xml'
-        result = self.openurl(testfile)
+        result = self.fire_request(testfile)
         assert b'The XML file has a bad format' in result.data 
 
     def test_zero_lines(self):
         testfile = 'static/test04.xml'
-        result = self.openurl(testfile)
+        result = self.fire_request(testfile)
         assert b'data : [\n    5,\n    \n    3,\n    \n    0,\n    ]' in result.data
         assert b'"Countess",\n   ]' in result.data #countess has 0 lines
 
@@ -74,15 +70,16 @@ class AppTests(unittest.TestCase):
     """XML with bad format"""
     def test_XML_with_bad_format(self):
         testfile = 'static/test05.xml'
-        result = self.openurl(testfile)
+        result = self.fire_request(testfile)
         assert b'The XML file has a bad format' in result.data
 
 
-        
 
-        
-        
-
+    """Non-Existent XML file"""
+    def test_Non_Existent_XML(self):
+        testfile = 'static/test06.xml'
+        result = self.fire_request(testfile)
+        assert b'No such file or directory' in result.data
 
 
 if __name__ == '__main__':
