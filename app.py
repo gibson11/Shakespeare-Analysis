@@ -8,17 +8,12 @@ import requests
 
 
 app = Flask(__name__)
-#app.config.from_object(os.environ['APP_SETTINGS'])
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-
-#from models import Result
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    errors = []
     results = {}
+    errors = []
     speakerDict = {}
     sortedSpeakerDict = {}
 
@@ -33,8 +28,7 @@ def index():
             else:
                 r = requests.get(url)
         except:
-            errors.append("Unable to get URL. Please make sure it's valid and try again.")
-            return render_template('index.html', errors=errors)
+            getErrors("Unable to get URL. Please make sure it's valid and try again.", errors)
         if r:
             data = ""
             if "static" in url:
@@ -43,40 +37,39 @@ def index():
                     data = file.read()
                     file.close()
                 except:
-                    errors.append("No such file or directory. Please make sure it's a valid file and try again")
-                    return render_template('index.html', errors=errors)
+                    getErrors("No such file or directory. Please make sure it's a valid file and try again", errors)
             else:
                 file = urllib.request.urlopen(url)
                 data = file.read()
                 file.close()
             
+            root = ""
             try:
                 root = ET.fromstring(data)
+                #find all speeches
+                for speech in root.findall('./ACT/SCENE/SPEECH'): 
+                    #find the speaker name
+                    speaker = speech.find('SPEAKER').text 
+                    #skip if speaker name is ALL
+                    if speaker == "ALL": 
+                        continue 
+                    #convert speaker label to CamelCase for graph
+                    speaker = speaker.title() 
+                    #find all the lines by this speaker as a list
+                    lineList = speech.findall('LINE') 
+                    numberOfLines = len(lineList) 
+
+                    #if the speaker is already on the dict add to their number of lines
+                    if speaker in speakerDict:
+                        speakerDict[speaker] += numberOfLines 
+                    else:
+                        speakerDict[speaker] = numberOfLines
             except:
-                errors.append("The XML file has a bad format. Please make sure it's a valid file and try again")
-                return render_template('index.html', errors=errors)
+                getErrors("The XML file has a bad format. Please make sure it's a valid file and try again", errors)
 
-            #find all speeches
-            for speech in root.findall('./ACT/SCENE/SPEECH'): 
-                #find the speaker name
-                speaker = speech.find('SPEAKER').text 
-                #skip if speaker name is ALL
-                if speaker == "ALL": 
-                    continue 
-                #convert speaker label to CamelCase for graph
-                speaker = speaker.title() 
-                #find all the lines by this speaker as a list
-                lineList = speech.findall('LINE') 
-                numberOfLines = len(lineList) 
-
-                #if the speaker is already on the dict add to their number of lines
-                if speaker in speakerDict:
-                    speakerDict[speaker] += numberOfLines 
-                else:
-                    speakerDict[speaker] = numberOfLines 
+             
             if len(speakerDict) == 0:
-                errors.append("URL does not have any speakers. Please make sure it's a valid URL and try again.")
-                return render_template('index.html', errors=errors)
+                getErrors("URL does not have any speakers. Please make sure it's a valid URL and try again.", errors)
 
     
 
@@ -91,7 +84,9 @@ def index():
     return render_template('index.html', errors=errors)
 
 
-
+def getErrors(error, errors):
+    errors.append(error)
+    return render_template('index.html', errors=errors)
 
 
 
