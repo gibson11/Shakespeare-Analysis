@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def readPlay():
-    file = urllib.urlrequest.urlopen(' http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml')
+    file = urllib.request.urlopen(' http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml')
     data = file.read()
     file.close()
 
