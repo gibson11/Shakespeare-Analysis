@@ -1,1 +1,1 @@
-web gunicorn manage:ShakespeareAnalysis
+web: gunicorn app:app --log-file=-
