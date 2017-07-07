@@ -18,7 +18,8 @@ def readPlay():
 	sortedSpeakerDict = {}
 	listS = []
 	root = ET.fromstring(data)
-    for speech in root.findall('./ACT/SCENE/SPEECH'): #find all speeches
+	#find all speeches
+    for speech in root.findall('./ACT/SCENE/SPEECH'): 
     	speaker = speech.find('SPEAKER').text #find the speaker name
         if speaker == "ALL": 
         	continue #skip if speaker name is ALL
