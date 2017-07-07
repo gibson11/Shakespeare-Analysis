@@ -1,0 +1,69 @@
+<PLAY>
+	<TITLE>All's Well That Ends Well</TITLE>
+	<FM>
+		<P>
+			Text placed in the public domain by Moby Lexical Tools, 1992.
+		</P>
+		<P>SGML markup by Jon Bosak, 1992-1994.</P>
+		<P>XML version by Jon Bosak, 1996-1998.</P>
+		<P>
+			This work may be freely copied and distributed worldwide.
+		</P>
+	</FM>
+	<PERSONAE>
+		<TITLE>Dramatis Personae</TITLE>
+		<PERSONA>KING OF FRANCE</PERSONA>
+		<PERSONA>DUKE OF FLORENCE</PERSONA>
+		<PERSONA>BERTRAM, Count of Rousillon.</PERSONA>
+		<PERSONA>LAFEU, an old lord.</PERSONA>
+		<PERSONA>PAROLLES, a follower of Bertram.</PERSONA>
+		<PGROUP>
+			<PERSONA>Steward</PERSONA>
+			<PERSONA>Clown</PERSONA>
+			<GRPDESCR>servants to the Countess of Rousillon.</GRPDESCR>
+		</PGROUP>
+		<PERSONA>A Page.</PERSONA>
+		<PERSONA>COUNTESS OF ROUSILLON, mother to Bertram.</PERSONA>
+		<PERSONA>HELENA, a gentlewoman protected by the Countess.</PERSONA>
+		<PERSONA>An old Widow of Florence.</PERSONA>
+		<PERSONA>DIANA, daughter to the Widow.</PERSONA>
+		<PGROUP>
+			<PERSONA>VIOLENTA</PERSONA>
+			<PERSONA>MARIANA</PERSONA>
+			<GRPDESCR>neighbours and friends to the Widow.</GRPDESCR>
+		</PGROUP>
+		<PERSONA>
+			Lords, Officers, Soldiers, c., French and Florentine.
+		</PERSONA>
+	</PERSONAE>
+	<SCNDESCR>SCENE Rousillon; Paris; Florence; Marseilles.</SCNDESCR>
+	<PLAYSUBT>ALL'S WELL THAT ENDS WELL</PLAYSUBT>
+	<ACT>
+		<TITLE>ACT I</TITLE>
+		<SCENE>
+			<TITLE>SCENE I. Rousillon. The COUNT's palace.</TITLE>
+			<STAGEDIR>
+				Enter BERTRAM, the COUNTESS of Rousillon, HELENA, and LAFEU, all in black
+			</STAGEDIR>
+			<SPEECH>
+				<SPEAKER>COUNTESS</SPEAKER>
+				<LINE>
+					In delivering my son from me, I bury a second husband.
+				</LINE>
+			</SPEECH>
+			<SPEECH>
+				<SPEAKER>BERTRAM</SPEAKER>
+				<LINE>And I in going, madam, weep o'er my father's death</LINE>
+				<LINE>anew: but I must attend his majesty's command, to</LINE>
+				<LINE>whom I am now in ward, evermore in subjection.</LINE>
+			</SPEECH>
+			<SPEECH>
+				<SPEAKER>LAFEU</SPEAKER>
+				<LINE>You shall find of the king a husband, madam; you,</LINE>
+				<LINE>
+					sir, a father: he that so generally is at all times
+				</LINE>
+				<LINE>
+					good must of necessity hold his virtue to you; whose
+				</LINE>
+				

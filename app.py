@@ -23,20 +23,39 @@ def index():
     sortedSpeakerDict = {}
 
     if request.method == "POST":
+        r = ""
+        url = ""
         # get url that the person has entered
         try:
             url = request.form['url']
-            r = requests.get(url)
+            if "static" in url:
+                r = url
+            else:
+                r = requests.get(url)
         except:
             errors.append("Unable to get URL. Please make sure it's valid and try again.")
             return render_template('index.html', errors=errors)
         if r:
-            file = urllib.request.urlopen(url)
-            data = file.read()
-            file.close()
-
+            data = ""
+            if "static" in url:
+                try:
+                    file = open(url)
+                    data = file.read()
+                    file.close()
+                except:
+                    errors.append("No such file or directory. Please make sure it's a valid file and try again")
+                    return render_template('index.html', errors=errors)
+            else:
+                file = urllib.request.urlopen(url)
+                data = file.read()
+                file.close()
             
-            root = ET.fromstring(data)
+            try:
+                root = ET.fromstring(data)
+            except:
+                errors.append("The XML file has a bad format. Please make sure it's a valid file and try again")
+                return render_template('index.html', errors=errors)
+
             #find all speeches
             for speech in root.findall('./ACT/SCENE/SPEECH'): 
                 #find the speaker name
@@ -55,6 +74,9 @@ def index():
                     speakerDict[speaker] += numberOfLines 
                 else:
                     speakerDict[speaker] = numberOfLines 
+            if len(speakerDict) == 0:
+                errors.append("URL does not have any speakers. Please make sure it's a valid URL and try again.")
+                return render_template('index.html', errors=errors)
 
     
 
