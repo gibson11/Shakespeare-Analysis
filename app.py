@@ -20,16 +20,20 @@ def readPlay():
 	root = ET.fromstring(data)
 	#find all speeches
 	for speech in root.findall('./ACT/SCENE/SPEECH'): 
-    	speaker = speech.find('SPEAKER').text #find the speaker name
+		#find the speaker name
+		speaker = speech.find('SPEAKER').text 
     	#skip if speaker name is ALL
     	if speaker == "ALL": 
     		continue 
-        speaker = speaker.title() #convert speaker label to CamelCase for graph
-    	lineList = speech.findall('LINE') #find all the lines by this speaker as a list
-    	numberOfLines = len(lineList) 
-    	
+    	#convert speaker label to CamelCase for graph
+    	speaker = speaker.title() 
+        #find all the lines by this speaker as a list
+        lineList = speech.findall('LINE') 
+        numberOfLines = len(lineList) 
+        
+    	#if the speaker is already on the dict add to their number of lines
     	if speaker in speakerDict:
-    		speakerDict[speaker] += numberOfLines #if the speaker is already on the dict add to their number of lines
+    		speakerDict[speaker] += numberOfLines 
     	else:
     		speakerDict[speaker] = numberOfLines 
 
