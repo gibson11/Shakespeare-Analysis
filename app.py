@@ -44,7 +44,6 @@ def readPlay():
     labels = list(sortedSpeakerDict.keys())
     values = list(sortedSpeakerDict.values())
     for i in range(len(labels)):
-        print labels[i], values[i]
         return render_template('chart.html', values=values, labels=labels)
 
         if __name__ == "__main__":
