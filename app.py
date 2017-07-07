@@ -10,18 +10,18 @@ app = Flask(__name__)
 
 @app.route("/")
 def readPlay():
-    file = urllib2.urlopen(' http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml')
-    data = file.read()
-    file.close()
+	file = urllib2.urlopen(' http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml')
+	data = file.read()
+	file.close()
 
-    speakerDict = {}
-    sortedSpeakerDict = {}
-    listS = []
-    root = ET.fromstring(data)
+	speakerDict = {}
+	sortedSpeakerDict = {}
+	listS = []
+	root = ET.fromstring(data)
     for speech in root.findall('./ACT/SCENE/SPEECH'): #find all speeches
     	speaker = speech.find('SPEAKER').text #find the speaker name
-        if speaker == 'ALL': #skip if speaker name is ALL
-            continue 
+        if speaker == "ALL": 
+        	continue #skip if speaker name is ALL
         speaker = speaker.title() #convert speaker label to CamelCase for graph
     	lineList = speech.findall('LINE') #find all the lines by this speaker as a list
     	numberOfLines = len(lineList) 
@@ -38,9 +38,9 @@ def readPlay():
     labels = list(sortedSpeakerDict.keys())
     values = list(sortedSpeakerDict.values())
     for i in range(len(labels)):
-        print labels[i], values[i]
-        return render_template('chart.html', values=values, labels=labels)
+    	print labels[i], values[i]
+    	return render_template('chart.html', values=values, labels=labels)
 
-        if __name__ == "__main__":
-            port = int(os.environ.get("PORT", 5000))
-            app.run(host='0.0.0.0', port=port)
+    	if __name__ == "__main__":
+    		port = int(os.environ.get("PORT", 5000))
+    		app.run(host='0.0.0.0', port=port)
