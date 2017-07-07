@@ -1,4 +1,4 @@
-import urllib2
+import urllib.request
 import xml.etree.ElementTree as ET
 import os
 from collections import OrderedDict
@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def readPlay():
-    file = urllib2.urlopen(' http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml')
+    file = urllib.urlrequest.urlopen(' http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml')
     data = file.read()
     file.close()
 
